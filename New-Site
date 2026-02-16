@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Patriot Surface | Decks & Patios | Pottsboro & Sherman, TX</title>
+  <meta name="description" content="Revamp your outdoor living spaces with Patriot Surface in Pottsboro and Sherman, TX." />
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111824;
+      --card2:#0f1621;
+      --text:#eaf0f6;
+      --muted:#b7c3d1;
+      --line:rgba(255,255,255,.12);
+      --accent:#0ea5e9;   /* button */
+      --accent2:#22c55e;  /* subtle */
+      --shadow: 0 16px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(14,165,233,.22), transparent 55%),
+        radial-gradient(900px 500px at 90% 10%, rgba(34,197,94,.14), transparent 60%),
+        linear-gradient(180deg, #070a0f 0%, var(--bg) 50%, #070a0f 100%);
+      color:var(--text);
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
+
+    /* Header */
+    .header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:saturate(140%) blur(10px);
+      background: rgba(7,10,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+    .header-inner{
+      display:flex; align-items:center; gap:18px;
+      padding:14px 0;
+    }
+    .brand{display:flex; align-items:center; gap:12px; min-width: 240px;}
+    .brand img{height:44px; width:auto; display:block}
+    .nav{
+      display:flex; align-items:center; gap:16px; flex:1;
+      justify-content:center;
+    }
+    .nav a, .nav button{
+      font: inherit;
+      border:0;
+      background:transparent;
+      color:var(--text);
+      padding:10px 10px;
+      border-radius:12px;
+      opacity:.92;
+      cursor:pointer;
+    }
+    .nav a:hover, .nav button:hover{background:rgba(255,255,255,.06); opacity:1}
+    .nav .active{background:rgba(255,255,255,.07)}
+    .right{
+      display:flex; align-items:center; gap:10px; justify-content:flex-end;
+      min-width: 240px;
+    }
+    .phone{
+      display:flex; flex-direction:column; line-height:1.05;
+      text-align:right;
+    }
+    .phone .num{font-weight:700}
+    .phone .txt{font-size:12px; color:var(--muted)}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .btn:hover{background:rgba(255,255,255,.09)}
+    .btn.primary{
+      background: linear-gradient(180deg, rgba(14,165,233,.95), rgba(14,165,233,.72));
+      border-color: rgba(14,165,233,.45);
+    }
+    .btn.primary:hover{filter:saturate(1.05) brightness(1.02)}
+    .btn.ghost{
+      background: transparent;
+      border-color: rgba(255,255,255,.22);
+      box-shadow:none;
+    }
+
+    /* Dropdown */
+    .dropdown{position:relative}
+    .menu{
+      position:absolute; top:46px; left:0;
+      min-width: 260px;
+      background: rgba(15,22,33,.96);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:10px;
+      box-shadow: var(--shadow);
+      display:none;
+    }
+    .menu a{
+      display:block;
+      padding:10px 10px;
+      border-radius:12px;
+      color:var(--text);
+      opacity:.92;
+    }
+    .menu a:hover{background:rgba(255,255,255,.06); opacity:1}
+    .dropdown.open .menu{display:block}
+
+    /* Mobile nav */
+    .hamburger{display:none}
+    .mobile-panel{
+      display:none;
+      border-top:1px solid var(--line);
+      padding:12px 0 18px 0;
+    }
+    .mobile-panel a, .mobile-panel button{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      font: inherit;
+      cursor:pointer;
+      margin-top:10px;
+    }
+    .mobile-sub{display:none; padding-left:10px}
+    .mobile-sub a{margin-top:8px; background:rgba(255,255,255,.03)}
+    .mobile-open .mobile-panel{display:block}
+
+    /* Hero */
+    .hero{padding:64px 0 26px 0}
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    .hero-card{
+      border:1px solid var(--line);
+      background: rgba(17,24,36,.62);
+      border-radius: calc(var(--radius) + 6px);
+      box-shadow: var(--shadow);
+      padding:28px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(800px 280px at 0% 0%, rgba(14,165,233,.22), transparent 60%),
+        radial-gradient(700px 240px at 100% 10%, rgba(34,197,94,.14), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-card > *{position:relative}
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+      color:var(--muted);
+    }
+    h1{margin:10px 0 10px 0; font-size:44px; line-height:1.08}
+    .subhead{color:var(--muted); font-size:16px; line-height:1.6; max-width: 62ch}
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .mini{
+      margin-top:18px;
+      display:flex; gap:12px; flex-wrap:wrap;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .mini span{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+    }
+    .side-card{
+      border:1px solid var(--line);
+      background: rgba(15,22,33,.70);
+      border-radius: calc(var(--radius) + 6px);
+      box-shadow: var(--shadow);
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .side-card h3{margin:0; font-size:14px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+    .side-card p{margin:0; color:var(--text); opacity:.92; line-height:1.6}
+    .side-card .btn{width:fit-content}
+
+    /* Sections */
+    .section{padding:34px 0}
+    .section h2{font-size:26px; margin:0 0 12px 0}
+    .section p.lead{margin:0 0 18px 0; color:var(--muted); line-height:1.7}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background: rgba(17,24,36,.50);
+      border-radius: var(--radius);
+      padding:16px;
+      min-height: 160px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      box-shadow: 0 10px 26px rgba(0,0,0,.22);
+    }
+    .icon{
+      width:42px; height:42px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .card h4{margin:10px 0 4px 0}
+    .card p{margin:0; color:var(--muted); line-height:1.6; font-size:14px}
+    .card .link{
+      margin-top:12px;
+      display:inline-flex; align-items:center; gap:8px;
+      color: #d7f0ff;
+      opacity:.95;
+      font-weight:600;
+    }
+    .card .link:hover{opacity:1; text-decoration:underline}
+
+    .callout{
+      border:1px solid rgba(14,165,233,.25);
+      background: linear-gradient(180deg, rgba(14,165,233,.16), rgba(17,24,36,.45));
+      border-radius: calc(var(--radius) + 6px);
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+    }
+    .callout .left h5{
+      margin:0;
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: #cbe9ff;
+    }
+    .callout .left h3{margin:8px 0 0 0; font-size:20px}
+    .callout .left p{margin:10px 0 0 0; color:var(--muted); line-height:1.7; max-width: 70ch}
+
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+      align-items:start;
+    }
+    ul.feature{
+      margin:12px 0 0 0;
+      padding-left: 18px;
+      color:var(--muted);
+      line-height:1.9;
+    }
+    .badge-row{
+      display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .gmb{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+    }
+    .gmb img{width:56px; height:56px; display:block}
+
+    /* Reviews */
+    .reviews{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .review{
+      border:1px solid var(--line);
+      background: rgba(15,22,33,.62);
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.22);
+    }
+    .stars{letter-spacing:.08em; color:#eaf0f6; opacity:.95}
+    .review p{margin:10px 0 10px 0; color:var(--muted); line-height:1.7}
+    .review .who{font-weight:700; color:var(--text); opacity:.95}
+
+    /* Footer */
+    footer{
+      border-top:1px solid var(--line);
+      padding:22px 0 30px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+    footer .foot{
+      display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .nav{display:none}
+      .hamburger{display:inline-flex}
+      .hero-grid{grid-template-columns: 1fr}
+      .grid{grid-template-columns: repeat(2, 1fr)}
+      .reviews{grid-template-columns: 1fr}
+      h1{font-size:38px}
+    }
+    @media (max-width: 520px){
+      .brand{min-width:auto}
+      .right{min-width:auto}
+      .phone{display:none}
+      .grid{grid-template-columns: 1fr}
+      .two-col{grid-template-columns: 1fr}
+      h1{font-size:32px}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a class="brand" href="#top" aria-label="Patriot Surface Home">
+          <img
+            src="https://lirp.cdn-website.com/51f467ae/dms3rep/multi/opt/patriotsurface_logo-261w.png"
+            alt="Patriot Surface logo" />
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <a class="active" href="#top">Home</a>
+
+          <div class="dropdown" id="servicesDropdown">
+            <button type="button" aria-haspopup="true" aria-expanded="false" id="servicesBtn">
+              Services ▾
+            </button>
+            <div class="menu" role="menu" aria-label="Services menu">
+              <a role="menuitem" href="https://www.patriotsurface.com/decks-patios">Decks &amp; Patios</a>
+              <a role="menuitem" href="https://www.patriotsurface.com/tree-services">Tree Services</a>
+              <a role="menuitem" href="https://www.patriotsurface.com/landscape-design">Landscape Design</a>
+              <a role="menuitem" href="https://www.patriotsurface.com/interior-remodeling">Interior Remodeling</a>
+              <a role="menuitem" href="https://www.patriotsurface.com/storm-damage-repair">Storm Damage Repair</a>
+              <a role="menuitem" href="https://www.patriotsurface.com/haul-offs-dump-trailer-rental">Haul Offs &amp; Dump Trailer Rental</a>
+            </div>
+          </div>
+
+          <a href="https://www.patriotsurface.com/new-page">Gallery</a>
+          <a href="https://www.patriotsurface.com/reviews">Reviews</a>
+          <a href="https://www.patriotsurface.com/contact">Contact</a>
+        </nav>
+
+        <div class="right">
+          <div class="phone">
+            <div class="num">(469) 207-1138</div>
+            <div class="txt">Text us today!</div>
+          </div>
+
+          <button class="btn hamburger" id="hamburgerBtn" type="button" aria-label="Open menu">
+            ☰
+          </button>
+
+          <a class="btn primary" href="https://www.patriotsurface.com/contact">Talk With Us Now</a>
+        </div>
+      </div>
+
+      <!-- Mobile Panel -->
+      <div class="mobile-panel" id="mobilePanel" aria-label="Mobile menu">
+        <a href="#top">Home <span>→</span></a>
+        <button type="button" id="mobileServicesBtn">Services <span>▾</span></button>
+        <div class="mobile-sub" id="mobileServicesSub">
+          <a href="https://www.patriotsurface.com/decks-patios">Decks &amp; Patios <span>→</span></a>
+          <a href="https://www.patriotsurface.com/tree-services">Tree Services <span>→</span></a>
+          <a href="https://www.patriotsurface.com/landscape-design">Landscape Design <span>→</span></a>
+          <a href="https://www.patriotsurface.com/interior-remodeling">Interior Remodeling <span>→</span></a>
+          <a href="https://www.patriotsurface.com/storm-damage-repair">Storm Damage Repair <span>→</span></a>
+          <a href="https://www.patriotsurface.com/haul-offs-dump-trailer-rental">Haul Offs &amp; Dump Trailer Rental <span>→</span></a>
+        </div>
+        <a href="https://www.patriotsurface.com/new-page">Gallery <span>→</span></a>
+        <a href="https://www.patriotsurface.com/reviews">Reviews <span>→</span></a>
+        <a href="https://www.patriotsurface.com/contact">Contact <span>→</span></a>
+        <a href="tel:+14692071138">Call (469) 207-1138 <span>→</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-card">
+            <div class="kicker">REVAMP YOUR OUTDOOR LIVING SPACES</div>
+            <h1>REVAMP YOUR OUTDOOR LIVING SPACES</h1>
+            <div class="subhead">
+              Let us build your new patio in Pottsboro, Grayson County including Sherman, and surrounding areas
+            </div>
+
+            <div class="cta-row">
+              <a class="btn primary" href="https://www.patriotsurface.com/contact">Talk With Us Now</a>
+              <a class="btn ghost" href="https://www.patriotsurface.com/contact">Reach Out Today</a>
+            </div>
+
+            <div class="mini">
+              <span>Serving all of the Sherman, Pottsboro, TX and surrounding areas</span>
+              <span>We specialize in working with homeowners’ insurance to help get your claims approved quickly and efficiently.</span>
+            </div>
+          </div>
+
+          <aside class="side-card">
+            <h3>Elevate patios with style</h3>
+            <p>
+              In Pottsboro and Sherman, you deserve outdoor spaces that reflect your lifestyle and taste. Patriot Surface is here to
+              make that happen with over 15 years of experience. Whether you're dreaming of a new deck or need storm damage repair,
+              your vision is within reach.
+            </p>
+            <p>
+              Contact Patriot Surface today for a free estimate and see the possibilities unfold.
+            </p>
+            <a class="btn" href="https://www.patriotsurface.com/contact">Get a Free Estimate</a>
+
+            <div class="badge-row">
+              <a class="gmb" href="https://www.patriotsurface.com/reviews" aria-label="Google review badge">
+                <img src="https://lirp.cdn-website.com/d229567a/dms3rep/multi/opt/small-circle-review-btn-1920w.png" alt="Google review badge" />
+                <div>
+                  <div style="font-weight:800; color:var(--text)">Experience unmatched dedication</div>
+                  <div style="color:var(--muted); font-size:13px">★★★★★</div>
+                </div>
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES CARDS -->
+    <section class="section">
+      <div class="container">
+        <h2>Upgrade Your Outdoor Living Areas</h2>
+        <p class="lead">
+          Explore key services and get the help you need, from decks and patios to storm damage repair.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <div>
+              <div class="icon" aria-hidden="true">🏗️</div>
+              <h4>Decks &amp; Patios</h4>
+              <p>Your Dream Patio or Deck, Designed for Comfort</p>
+            </div>
+            <a class="link" href="https://www.patriotsurface.com/decks-patios">Learn More →</a>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="icon" aria-hidden="true">🌳</div>
+              <h4>Tree Services</h4>
+              <p>Tree Removal and Arborist Services</p>
+            </div>
+            <a class="link" href="https://www.patriotsurface.com/tree-services">Learn More →</a>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="icon" aria-hidden="true">🌿</div>
+              <h4>Landscape Design</h4>
+              <p>Add Value and Beauty to Your Home Exterior</p>
+            </div>
+            <a class="link" href="https://www.patriotsurface.com/landscape-design">Learn More →</a>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="icon" aria-hidden="true">🛠️</div>
+              <h4>Remodeling</h4>
+              <p>Transform Your Home With a New Kitchen or Bathroom</p>
+            </div>
+            <a class="link" href="https://www.patriotsurface.com/interior-remodeling">Learn More →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VETERAN OWNED CALLOUT -->
+    <section class="section">
+      <div class="container">
+        <div class="callout">
+          <div class="left">
+            <h5>VETERAN-OWNED AND OPERATED SERVICES</h5>
+            <h3>Gain confidence with transparent solutions</h3>
+            <p>
+              Patriot Surface stands out in Pottsboro and Sherman, TX with a commitment to transparency and communication.
+              Reach out now and benefit from competitive pricing.
+            </p>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="https://www.patriotsurface.com/contact">Get Started</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RANGE OF SERVICES -->
+    <section class="section">
+      <div class="container">
+        <div class="two-col">
+          <div>
+            <h2>Explore a range of services ➞</h2>
+            <p class="lead">
+              From residential to commercial projects, your needs are covered. With a focus on quality and transparency,
+              you can expect nothing but the best.
+            </p>
+            <a class="btn" href="https://www.patriotsurface.com/contact">Get started on your project</a>
+          </div>
+          <div>
+            <div class="card" style="min-height:auto">
+              <h4 style="margin-top:0">Available services</h4>
+              <ul class="feature">
+                <li>Designing and constructing decks</li>
+                <li>Building custom patios</li>
+                <li>Repairing storm damage</li>
+                <li>Removing and grinding stumps</li>
+                <li>Handling insurance claims</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="section">
+      <div class="container">
+        <h2>Experience unmatched dedication</h2>
+        <p class="lead">Recent customer feedback from the homepage section.</p>
+
+        <div class="reviews">
+          <div class="review">
+            <div class="stars">★★★★★</div>
+            <p>Kevin drove all the way from Melissa to Wolfe City to totally revamp my landscaping. He did a wonderful job and was very timely and professional...</p>
+            <div class="who">-Molly Wilkinson</div>
+          </div>
+          <div class="review">
+            <div class="stars">★★★★★</div>
+            <p>These guys were fast and so professional! They helped us get our nice new fence up and worked with us even through some issues...</p>
+            <div class="who">-Melissa</div>
+          </div>
+          <div class="review">
+            <div class="stars">★★★★★</div>
+            <p>Patriot was so amazing! They did my roof and fence and dealt with the insurance for me as well! I couldn’t be more happy with this company!</p>
+            <div class="who">-Briana Johnson</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <a class="btn" href="https://www.patriotsurface.com/reviews">Read more reviews →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <div>Copyright © Patriot Surface | All Rights Reserved</div>
+        <div>Pottsboro, TX 75076</div>
+        <div><a href="https://facebook.com" rel="noopener">Facebook</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Desktop dropdown
+    const dd = document.getElementById('servicesDropdown');
+    const btn = document.getElementById('servicesBtn');
+
+    function closeDropdown(e){
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+      btn?.setAttribute('aria-expanded', dd.classList.contains('open') ? 'true' : 'false');
+    }
+
+    btn?.addEventListener('click', () => {
+      dd.classList.toggle('open');
+      btn.setAttribute('aria-expanded', dd.classList.contains('open') ? 'true' : 'false');
+    });
+    document.addEventListener('click', closeDropdown);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') dd.classList.remove('open');
+      btn?.setAttribute('aria-expanded', dd.classList.contains('open') ? 'true' : 'false');
+    });
+
+    // Mobile menu
+    const hb = document.getElementById('hamburgerBtn');
+    const panel = document.getElementById('mobilePanel');
+    hb?.addEventListener('click', () => {
+      document.body.classList.toggle('mobile-open');
+      hb.setAttribute('aria-label', document.body.classList.contains('mobile-open') ? 'Close menu' : 'Open menu');
+    });
+
+    const msb = document.getElementById('mobileServicesBtn');
+    const msub = document.getElementById('mobileServicesSub');
+    msb?.addEventListener('click', () => {
+      const open = msub.style.display === 'block';
+      msub.style.display = open ? 'none' : 'block';
+      msb.querySelector('span').textContent = open ? '▾' : '▴';
+    });
+  </script>
+</body>
+</html>
