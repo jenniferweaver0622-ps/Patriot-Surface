@@ -52,6 +52,7 @@ export const SERVICES: Record<string, ServicePage> = {
     ctaText: "Talk With Us Now",
     ctaHref: "/contact",
   },
+
   "tree-services": {
     title: "Tree Services You Can Count On",
     subtitle: "Trimming, removals, cleanup, and storm response in Pottsboro & Sherman, TX.",
@@ -65,6 +66,7 @@ export const SERVICES: Record<string, ServicePage> = {
     ctaText: "Request a Quote",
     ctaHref: "/contact",
   },
+
   "landscape-design": {
     title: "Landscape Design & Outdoor Upgrades",
     subtitle: "Make your yard functional, beautiful, and easy to maintain.",
@@ -78,6 +80,7 @@ export const SERVICES: Record<string, ServicePage> = {
     ctaText: "Get an Estimate",
     ctaHref: "/contact",
   },
+
   "interior-remodeling": {
     title: "Interior Remodeling",
     subtitle: "Practical upgrades with clean finishes and durable results.",
@@ -91,6 +94,7 @@ export const SERVICES: Record<string, ServicePage> = {
     ctaText: "Talk With Us",
     ctaHref: "/contact",
   },
+
   "storm-damage-repair": {
     title: "Storm Damage Repair",
     subtitle: "Fast, reliable repairs to get your property back in shape.",
@@ -104,6 +108,7 @@ export const SERVICES: Record<string, ServicePage> = {
     ctaText: "Contact Us Now",
     ctaHref: "/contact",
   },
+
   "haul-offs-dump-trailer-rental": {
     title: "Haul Offs & Dump Trailer Rental",
     subtitle: "Easy cleanup support when you need it most.",
@@ -117,7 +122,4 @@ export const SERVICES: Record<string, ServicePage> = {
     ctaText: "Book Service",
     ctaHref: "/contact",
   },
-
-    ctaText: "Talk With Us Now",
-    ctaHref: "/contact",
-  };
+};
