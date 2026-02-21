@@ -4,6 +4,7 @@ import { SITE } from "@/lib/site";
 export default function HomePage() {
   return (
     <div>
+
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-slate-900">
         <div className="mx-auto max-w-6xl px-4 py-24 text-center">
@@ -43,25 +44,30 @@ export default function HomePage() {
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              "Decks & Patios",
-              "Tree Services",
-              "Landscape Design",
-              "Interior Remodeling",
-              "Storm Damage Repair",
-              "Haul Offs & Dump Trailer Rental",
+              { label: "Decks & Patios", slug: "decks-patios" },
+              { label: "Tree Services", slug: "tree-services" },
+              { label: "Landscape Design", slug: "landscape-design" },
+              { label: "Interior Remodeling", slug: "interior-remodeling" },
+              { label: "Storm Damage Repair", slug: "storm-damage-repair" },
+              { label: "Haul Offs & Dump Trailer Rental", slug: "haul-offs-dump-trailer-rental" },
             ].map((service) => (
-              <div
-                key={service}
-                className="rounded-3xl border border-white/10 bg-white/5 p-6 hover:bg-white/10"
+              <Link
+                key={service.slug}
+                href={`/services/${service.slug}`}
+                className="group block cursor-pointer rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-xl hover:shadow-black/30"
               >
                 <h3 className="text-lg font-semibold text-white">
-                  {service}
+                  {service.label}
                 </h3>
 
-                <p className="mt-3 text-sm text-white/70">
-                  Professional, reliable service tailored to your property.
+                <p className="mt-3 text-sm leading-relaxed text-white/70">
+                  Learn more about our {service.label.toLowerCase()} services.
                 </p>
-              </div>
+
+                <div className="mt-5 text-sm font-semibold text-white/80 group-hover:text-white">
+                  View service →
+                </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -89,6 +95,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
     </div>
   );
 }
