@@ -15,7 +15,7 @@ export const SITE: SiteConfig = {
   logoUrl: "https://lirp.cdn-website.com/51f467ae/dms3rep/multi/opt/patriotsurface_logo-261w.png",
 
   email: "patriotsurface@gmail.com",
-  facebookMessengerUrl: "https://m.me/patriotsurface",
+  facebookMessengerUrl: "https://m.me/109709308624841",
 };
 
 export const NAV = [
