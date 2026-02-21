@@ -17,17 +17,11 @@ export default function SiteHeader() {
   // Close dropdowns on outside click + Esc
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      if (
-        servicesRef.current &&
-        !servicesRef.current.contains(e.target as Node)
-      ) {
+      if (servicesRef.current && !servicesRef.current.contains(e.target as Node)) {
         setServicesOpen(false);
       }
 
-      if (
-        hamburgerRef.current &&
-        !hamburgerRef.current.contains(e.target as Node)
-      ) {
+      if (hamburgerRef.current && !hamburgerRef.current.contains(e.target as Node)) {
         setMobileOpen(false);
       }
     }
@@ -47,6 +41,11 @@ export default function SiteHeader() {
       document.removeEventListener("keydown", handleEsc);
     };
   }, []);
+
+  const closeAll = () => {
+    setServicesOpen(false);
+    setMobileOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur">
@@ -79,6 +78,7 @@ export default function SiteHeader() {
               );
             }
 
+            // Desktop Services dropdown (button + children)
             return (
               <div key={item.label} className="relative" ref={servicesRef}>
                 <button
@@ -91,6 +91,17 @@ export default function SiteHeader() {
 
                 {servicesOpen && services?.children && (
                   <div className="absolute left-0 mt-2 w-72 rounded-2xl border border-white/10 bg-slate-950 p-2 shadow-2xl">
+                    {/* Make the top entry go to /services */}
+                    <Link
+                      href="/services"
+                      className="block rounded-xl px-3 py-2 text-sm font-semibold text-white/90 hover:bg-white/10"
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      View All Services →
+                    </Link>
+
+                    <div className="my-2 h-px bg-white/10" />
+
                     {services.children.map((c) => (
                       <Link
                         key={c.href}
@@ -141,24 +152,43 @@ export default function SiteHeader() {
           {/* Right-Aligned Dropdown Panel */}
           {mobileOpen && (
             <div className="absolute right-0 mt-3 w-72 overflow-hidden rounded-3xl border border-white/10 bg-slate-950/95 p-2 shadow-2xl">
-              {NAV.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="mt-2 block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white hover:bg-white/10"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <div className="flex items-center justify-between">
-                    <span>{item.label}</span>
-                    <span className="opacity-70">→</span>
-                  </div>
-                </Link>
-              ))}
+              {NAV.map((item) => {
+                // Mobile: Services should go to /services (index), not first child
+                if (item.label === "Services") {
+                  return (
+                    <Link
+                      key={item.label}
+                      href="/services"
+                      className="mt-2 block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white hover:bg-white/10"
+                      onClick={closeAll}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span>Services</span>
+                        <span className="opacity-70">→</span>
+                      </div>
+                    </Link>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="mt-2 block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white hover:bg-white/10"
+                    onClick={closeAll}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span>{item.label}</span>
+                      <span className="opacity-70">→</span>
+                    </div>
+                  </Link>
+                );
+              })}
 
               <Link
                 href={SITE.phoneHref}
                 className="mt-2 block rounded-2xl bg-sky-500 px-4 py-3 text-sm font-semibold text-white hover:bg-sky-400"
-                onClick={() => setMobileOpen(false)}
+                onClick={closeAll}
               >
                 <div className="flex items-center justify-between">
                   <span>Call/Text {SITE.phoneDisplay}</span>
