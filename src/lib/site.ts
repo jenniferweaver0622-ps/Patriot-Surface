@@ -1,10 +1,21 @@
-export const SITE = {
+export type SiteConfig = {
+  name: string;
+  phoneDisplay: string;
+  phoneHref: string;
+  cityLine: string;
+  logoUrl: string;
+  email: string;
+  facebookMessengerUrl: string;
+};
+export const SITE: SiteConfig = {
   name: "Patriot Surface",
   phoneDisplay: "(469) 207-1138",
   phoneHref: "tel:+14692071138",
   cityLine: "Pottsboro, TX 75076",
-  logoUrl:
-    "https://lirp.cdn-website.com/51f467ae/dms3rep/multi/opt/patriotsurface_logo-261w.png",
+  logoUrl: "https://lirp.cdn-website.com/51f467ae/dms3rep/multi/opt/patriotsurface_logo-261w.png",
+
+  email: "patriotsurface@gmail.com",
+  facebookMessengerUrl: "https://m.me/patriotsurface",
 };
 
 export const NAV = [
