@@ -40,6 +40,51 @@ export const NAV = [
   { label: "Contact", href: "/contact" },
 ];
 
+export type Review = {
+  name: string;
+  location?: string;
+  rating: 5 | 4 | 3 | 2 | 1;
+  text: string;
+};
+
+export const REVIEWS: Review[] = [
+  {
+    name: "Zach Westbrook",
+    rating: 5,
+    text: "I had a fantastic experience with Patriot Surface. They built both my deck and replaced my roof, and I couldn’t be happier with the results. The crew was professional, punctual, and paid great attention to detail. Everything was completed on time and with excellent craftsmanship. Kevin’s communication was clear and consistent from start to finish. I highly recommend Patriot Surface to anyone looking for reliable and high-quality work."
+  },
+  {
+    name: "Matthew Scott",
+    rating: 5,
+    text: "Awesome customer service. Patriot Surface came through. My roof definitely needed help and they gave me a great bid. The crew did excellent work and cleaned everything up quickly. I will be recommending them to everyone I know."
+  },
+  {
+    name: "Dustin Earley",
+    rating: 5,
+    text: "Patriot Surface did an amazing job. Kevin came out right after the storm passed and put a tarp on my roof where a tree had fallen and damaged it. Just two days later he came back and repaired it. He will be the only roofer I call from now on."
+  },
+  {
+    name: "Lillian River",
+    rating: 5,
+    text: "10 out of 10. Kevin has a great work ethic and a great attitude. I wouldn’t trust anyone else to get the job done. I'm really happy with the results. This company truly knows what they're doing."
+  },
+  {
+    name: "Stephanie Holloway",
+    rating: 5,
+    text: "Absolutely recommend. And I don’t recommend many. Great communication, helps you sort out exactly what you want, and then makes it happen. Good people and good work."
+  },
+  {
+    name: "Jeremy Washer",
+    rating: 5,
+    text: "Great guys that came out and got me out of a bad situation. 100% recommend these guys."
+  },
+  {
+    name: "Brendan Regan",
+    rating: 5,
+    text: "After the storms in March I delayed the whole roof process, but even almost a year later Kevin from Patriot Surface continued to follow up. Last week we finally got our new roof installed. Kevin is excellent at explaining everything and helping with the insurance process. He really took the headache away."
+  }
+];
+
 export type ServicePage = {
   title: string;
   subtitle: string;
