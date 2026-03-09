@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useMemo, useRef, useState } from "react";
 import { REVIEWS } from "@/lib/site";
 
 function Stars({ rating }: { rating: number }) {
@@ -13,9 +16,89 @@ function Stars({ rating }: { rating: number }) {
 }
 
 export default function ReviewsSection() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Duplicate reviews so the carousel feels fuller
+  const items = useMemo(() => [...REVIEWS, ...REVIEWS], []);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let animationFrame = 0;
+    let paused = false;
+
+    const speed = 0.6;
+
+    const updateActiveCard = () => {
+      const cards = Array.from(
+        el.querySelectorAll<HTMLElement>("[data-review-card='true']")
+      );
+
+      if (!cards.length) return;
+
+      const containerRect = el.getBoundingClientRect();
+      const centerX = containerRect.left + containerRect.width / 2;
+
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      cards.forEach((card, idx) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const distance = Math.abs(centerX - cardCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = idx;
+        }
+      });
+
+      setActiveIndex(closestIndex);
+    };
+
+    const tick = () => {
+      if (!paused) {
+        el.scrollLeft += speed;
+
+        // reset loop when near end
+        if (el.scrollLeft >= el.scrollWidth / 2) {
+          el.scrollLeft = 0;
+        }
+
+        updateActiveCard();
+      }
+
+      animationFrame = requestAnimationFrame(tick);
+    };
+
+    // Start centered-ish
+    el.scrollLeft = 0;
+    updateActiveCard();
+    animationFrame = requestAnimationFrame(tick);
+
+    const handleMouseEnter = () => {
+      paused = true;
+    };
+
+    const handleMouseLeave = () => {
+      paused = false;
+    };
+
+    el.addEventListener("mouseenter", handleMouseEnter);
+    el.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      el.removeEventListener("mouseenter", handleMouseEnter);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [items]);
+
   return (
-    <section className="bg-slate-950">
-      <div className="mx-auto max-w-6xl px-4 py-20">
+    <section className="bg-slate-950 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 py-20">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-white sm:text-3xl">Reviews</h2>
           <p className="mt-4 text-white/70">
@@ -23,23 +106,39 @@ export default function ReviewsSection() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {REVIEWS.map((r, idx) => (
-            <div
-              key={`${r.name}-${idx}`}
-              className="rounded-3xl border border-white/10 bg-white/5 p-6"
-            >
-              <Stars rating={r.rating} />
+        <div
+          ref={containerRef}
+          className="mt-12 flex gap-6 overflow-x-hidden scroll-smooth py-6"
+        >
+          {items.map((r, idx) => {
+            const isActive = idx === activeIndex;
 
-              <p className="mt-4 text-sm leading-relaxed text-white/80">
-                “{r.text}”
-              </p>
+            return (
+              <div
+                key={`${r.name}-${idx}`}
+                data-review-card="true"
+                className={[
+                  "w-[320px] shrink-0 rounded-3xl border border-white/10 bg-white/5 p-6 transition-all duration-500 ease-out",
+                  isActive
+                    ? "scale-110 bg-white/10 shadow-2xl shadow-black/30 opacity-100"
+                    : "scale-95 opacity-60",
+                ].join(" ")}
+              >
+                <Stars rating={r.rating} />
 
-              <div className="mt-6">
-                <div className="font-semibold text-white">{r.name}</div>
+                <p className="mt-4 text-sm leading-relaxed text-white/80">
+                  “{r.text}”
+                </p>
+
+                <div className="mt-6">
+                  <div className="font-semibold text-white">{r.name}</div>
+                  {r.location ? (
+                    <div className="text-xs text-white/60">{r.location}</div>
+                  ) : null}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
