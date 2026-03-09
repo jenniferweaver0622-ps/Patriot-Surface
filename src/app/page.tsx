@@ -5,7 +5,6 @@ import ReviewsSection from "@/components/ReviewsSection";
 export default function HomePage() {
   return (
     <div>
-      {/* Hero Section */}
       <section className="relative overflow-hidden bg-slate-900">
         <div className="mx-auto max-w-6xl px-4 py-24 text-center">
           <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
@@ -35,7 +34,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Preview */}
       <section className="bg-slate-950">
         <div className="mx-auto max-w-6xl px-4 py-20">
           <h2 className="text-2xl font-bold text-white sm:text-3xl">
@@ -75,7 +73,6 @@ export default function HomePage() {
 
       <ReviewsSection />
 
-      {/* Callout Section */}
       <section className="bg-black">
         <div className="mx-auto max-w-6xl px-4 py-20 text-center">
           <h2 className="text-2xl font-bold text-white sm:text-3xl">
