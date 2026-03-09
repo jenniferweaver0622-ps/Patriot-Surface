@@ -19,7 +19,6 @@ export default function ReviewsSection() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Duplicate reviews so the carousel feels fuller
   const items = useMemo(() => [...REVIEWS, ...REVIEWS], []);
 
   useEffect(() => {
@@ -28,7 +27,6 @@ export default function ReviewsSection() {
 
     let animationFrame = 0;
     let paused = false;
-
     const speed = 0.6;
 
     const updateActiveCard = () => {
@@ -62,7 +60,6 @@ export default function ReviewsSection() {
       if (!paused) {
         el.scrollLeft += speed;
 
-        // reset loop when near end
         if (el.scrollLeft >= el.scrollWidth / 2) {
           el.scrollLeft = 0;
         }
@@ -73,7 +70,6 @@ export default function ReviewsSection() {
       animationFrame = requestAnimationFrame(tick);
     };
 
-    // Start centered-ish
     el.scrollLeft = 0;
     updateActiveCard();
     animationFrame = requestAnimationFrame(tick);
@@ -97,7 +93,7 @@ export default function ReviewsSection() {
   }, [items]);
 
   return (
-    <section className="bg-slate-950 overflow-hidden">
+    <section className="overflow-hidden bg-slate-950">
       <div className="mx-auto max-w-7xl px-4 py-20">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-white sm:text-3xl">Reviews</h2>
@@ -108,7 +104,7 @@ export default function ReviewsSection() {
 
         <div
           ref={containerRef}
-          className="mt-12 flex gap-6 overflow-x-hidden scroll-smooth py-6"
+          className="mt-12 flex gap-6 overflow-x-hidden py-6"
         >
           {items.map((r, idx) => {
             const isActive = idx === activeIndex;
@@ -120,7 +116,7 @@ export default function ReviewsSection() {
                 className={[
                   "w-[320px] shrink-0 rounded-3xl border border-white/10 bg-white/5 p-6 transition-all duration-500 ease-out",
                   isActive
-                    ? "scale-110 bg-white/10 shadow-2xl shadow-black/30 opacity-100"
+                    ? "scale-110 bg-white/10 opacity-100 shadow-2xl shadow-black/30"
                     : "scale-95 opacity-60",
                 ].join(" ")}
               >
