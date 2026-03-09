@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { SITE } from "@/lib/site";
+import ReviewsSection from "@/components/ReviewsSection";
 
 export default function HomePage() {
   return (
     <div>
-
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-slate-900">
         <div className="mx-auto max-w-6xl px-4 py-24 text-center">
@@ -73,6 +73,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <ReviewsSection />
+
       {/* Callout Section */}
       <section className="bg-black">
         <div className="mx-auto max-w-6xl px-4 py-20 text-center">
@@ -95,7 +97,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }
