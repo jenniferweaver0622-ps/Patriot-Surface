@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
 import { REVIEWS } from "@/lib/site";
 
 function Stars({ rating }: { rating: number }) {
@@ -16,81 +16,7 @@ function Stars({ rating }: { rating: number }) {
 }
 
 export default function ReviewsSection() {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
   const items = useMemo(() => [...REVIEWS, ...REVIEWS], []);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    let animationFrame = 0;
-    let paused = false;
-    const speed = 0.6;
-
-    const updateActiveCard = () => {
-      const cards = Array.from(
-        el.querySelectorAll<HTMLElement>("[data-review-card='true']")
-      );
-
-      if (!cards.length) return;
-
-      const containerRect = el.getBoundingClientRect();
-      const centerX = containerRect.left + containerRect.width / 2;
-
-      let closestIndex = 0;
-      let closestDistance = Infinity;
-
-      cards.forEach((card, idx) => {
-        const rect = card.getBoundingClientRect();
-        const cardCenter = rect.left + rect.width / 2;
-        const distance = Math.abs(centerX - cardCenter);
-
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestIndex = idx;
-        }
-      });
-
-      setActiveIndex(closestIndex);
-    };
-
-    const tick = () => {
-      if (!paused) {
-        el.scrollLeft += speed;
-
-        if (el.scrollLeft >= el.scrollWidth / 2) {
-          el.scrollLeft = 0;
-        }
-
-        updateActiveCard();
-      }
-
-      animationFrame = requestAnimationFrame(tick);
-    };
-
-    el.scrollLeft = 0;
-    updateActiveCard();
-    animationFrame = requestAnimationFrame(tick);
-
-    const handleMouseEnter = () => {
-      paused = true;
-    };
-
-    const handleMouseLeave = () => {
-      paused = false;
-    };
-
-    el.addEventListener("mouseenter", handleMouseEnter);
-    el.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      cancelAnimationFrame(animationFrame);
-      el.removeEventListener("mouseenter", handleMouseEnter);
-      el.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, [items]);
 
   return (
     <section className="overflow-hidden bg-slate-950">
@@ -102,23 +28,12 @@ export default function ReviewsSection() {
           </p>
         </div>
 
-        <div
-          ref={containerRef}
-          className="mt-12 flex gap-6 overflow-x-hidden py-6"
-        >
-          {items.map((r, idx) => {
-            const isActive = idx === activeIndex;
-
-            return (
+        <div className="relative mt-12 overflow-hidden">
+          <div className="reviews-track flex w-max gap-6 py-6">
+            {items.map((r, idx) => (
               <div
                 key={`${r.name}-${idx}`}
-                data-review-card="true"
-                className={[
-                  "w-[320px] shrink-0 rounded-3xl border border-white/10 bg-white/5 p-6 transition-all duration-500 ease-out",
-                  isActive
-                    ? "scale-110 bg-white/10 opacity-100 shadow-2xl shadow-black/30"
-                    : "scale-95 opacity-60",
-                ].join(" ")}
+                className="review-card w-[320px] shrink-0 rounded-3xl border border-white/10 bg-white/5 p-6 transition-transform duration-500 ease-out"
               >
                 <Stars rating={r.rating} />
 
@@ -133,10 +48,42 @@ export default function ReviewsSection() {
                   ) : null}
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
+
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-950 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-950 to-transparent" />
         </div>
       </div>
+
+      <style jsx>{`
+        .reviews-track {
+          animation: marquee 35s linear infinite;
+        }
+
+        .reviews-track:hover {
+          animation-play-state: paused;
+        }
+
+        .review-card {
+          transform: scale(0.95);
+          opacity: 0.7;
+        }
+
+        .review-card:hover {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+
+        @keyframes marquee {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-50%);
+          }
+        }
+      `}</style>
     </section>
   );
 }
