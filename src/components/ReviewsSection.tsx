@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { REVIEWS } from "@/lib/site";
 
 function Stars({ rating }: { rating: number }) {
@@ -16,7 +16,31 @@ function Stars({ rating }: { rating: number }) {
 }
 
 export default function ReviewsSection() {
-  const items = useMemo(() => [...REVIEWS, ...REVIEWS], []);
+  const items = useMemo(() => REVIEWS, []);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (items.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % items.length);
+    }, 5000); // stays on each review for 5 seconds
+
+    return () => clearInterval(interval);
+  }, [items.length]);
+
+  const getVisibleReviews = () => {
+    const prevIndex = (activeIndex - 1 + items.length) % items.length;
+    const nextIndex = (activeIndex + 1) % items.length;
+
+    return [
+      { ...items[prevIndex], position: "left", key: `left-${prevIndex}` },
+      { ...items[activeIndex], position: "center", key: `center-${activeIndex}` },
+      { ...items[nextIndex], position: "right", key: `right-${nextIndex}` },
+    ];
+  };
+
+  const visibleReviews = getVisibleReviews();
 
   return (
     <section className="overflow-hidden bg-slate-950">
@@ -28,62 +52,57 @@ export default function ReviewsSection() {
           </p>
         </div>
 
-        <div className="relative mt-12 overflow-hidden">
-          <div className="reviews-track flex w-max gap-6 py-6">
-            {items.map((r, idx) => (
-              <div
-                key={`${r.name}-${idx}`}
-                className="review-card w-[320px] shrink-0 rounded-3xl border border-white/10 bg-white/5 p-6 transition-transform duration-500 ease-out"
-              >
-                <Stars rating={r.rating} />
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {visibleReviews.map((review) => {
+            const isCenter = review.position === "center";
 
-                <p className="mt-4 text-sm leading-relaxed text-white/80">
-                  “{r.text}”
+            return (
+              <div
+                key={review.key}
+                className={[
+                  "rounded-3xl border border-white/10 p-6 transition-all duration-700 ease-in-out",
+                  isCenter
+                    ? "scale-105 bg-white/10 shadow-2xl shadow-black/30 opacity-100"
+                    : "scale-95 bg-white/5 opacity-60",
+                ].join(" ")}
+              >
+                <Stars rating={review.rating} />
+
+                <p
+                  className={[
+                    "mt-4 leading-relaxed text-white/80 transition-all duration-700",
+                    isCenter ? "text-base" : "text-sm",
+                  ].join(" ")}
+                >
+                  “{review.text}”
                 </p>
 
                 <div className="mt-6">
-                  <div className="font-semibold text-white">{r.name}</div>
-                  {r.location ? (
-                    <div className="text-xs text-white/60">{r.location}</div>
+                  <div className="font-semibold text-white">{review.name}</div>
+                  {"location" in review && review.location ? (
+                    <div className="text-xs text-white/60">{review.location}</div>
                   ) : null}
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-950 to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-950 to-transparent" />
+        <div className="mt-8 flex justify-center gap-2">
+          {items.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => setActiveIndex(idx)}
+              className={[
+                "h-2.5 w-2.5 rounded-full transition-all",
+                idx === activeIndex ? "bg-white" : "bg-white/30 hover:bg-white/50",
+              ].join(" ")}
+              aria-label={`Go to review ${idx + 1}`}
+            />
+          ))}
         </div>
       </div>
-
-      <style jsx>{`
-        .reviews-track {
-          animation: marquee 35s linear infinite;
-        }
-
-        .reviews-track:hover {
-          animation-play-state: paused;
-        }
-
-        .review-card {
-          transform: scale(0.95);
-          opacity: 0.7;
-        }
-
-        .review-card:hover {
-          transform: scale(1.05);
-          opacity: 1;
-        }
-
-        @keyframes marquee {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-      `}</style>
     </section>
   );
 }
